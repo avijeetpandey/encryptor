@@ -9,10 +9,11 @@ class Encryptor extends StatelessWidget {
     return MaterialApp(
       title: "Encryptor",
       debugShowCheckedModeBanner: false,
-      home:Constants.prefs.getBool("isBoarded")==true?HomePage():OnBoarding(),
-      routes: {
-        "/home" : (context)=>HomePage()
-      },
+      home: Constants.prefs.getBool("isBoarded") == true
+          ? HomePage()
+          : OnBoarding(),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
+      routes: {"/home": (context) => HomePage()},
     );
   }
 }
