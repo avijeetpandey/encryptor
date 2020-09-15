@@ -8,7 +8,10 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Encryptor")
       ),
-      body:OnBoarding()
+      body:Center(
+        child: Text("This is the home Page"),
+      )
     );
   }
 }
+ 

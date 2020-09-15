@@ -1,6 +1,7 @@
 import 'package:encryptor/Pages/Onboarding.dart';
+import 'package:encryptor/utils/Constants.dart';
 import 'package:flutter/material.dart';
-import './HomePage.dart';
+import 'Pages/HomePage.dart';
 
 class Encryptor extends StatelessWidget {
   @override
@@ -8,7 +9,10 @@ class Encryptor extends StatelessWidget {
     return MaterialApp(
       title: "Encryptor",
       debugShowCheckedModeBanner: false,
-      home: OnBoarding(),
+      home:Constants.prefs.getBool("isBoarded")==true?HomePage():OnBoarding(),
+      routes: {
+        "/home" : (context)=>HomePage()
+      },
     );
   }
 }

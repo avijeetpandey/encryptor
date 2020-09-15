@@ -1,3 +1,4 @@
+import 'package:encryptor/utils/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sk_onboarding_screen/sk_onboarding_model.dart';
 import 'package:sk_onboarding_screen/sk_onboarding_screen.dart';
@@ -20,13 +21,15 @@ class OnBoarding extends StatelessWidget {
         imagePath: './assets/images/one.png'),
     SkOnboardingModel(
         title: 'Save passwords',
-        description: 'Save generated passwords for hassle-free logins , just copy and paste !',
+        description:
+            'Save generated passwords for hassle-free logins , just copy and paste !',
         titleColor: Colors.black,
         descripColor: const Color(0xFF929794),
         imagePath: './assets/images/two.png'),
     SkOnboardingModel(
         title: 'Made with ❤ , By Avijeet',
-        description:'All set in , lets dive in and start manging the passwords you !',
+        description:
+            'All set in , lets dive in and start manging the passwords you !',
         titleColor: Colors.black,
         descripColor: const Color(0xFF929794),
         imagePath: './assets/images/three.png')
@@ -40,10 +43,12 @@ class OnBoarding extends StatelessWidget {
         themeColor: const Color(0xFFf74269),
         pages: pages,
         skipClicked: (value) {
-          print("Skip");
+          Navigator.pushReplacementNamed(context, "/home");
+          Constants.prefs.setBool("isBoarded", true);
         },
         getStartedClicked: (value) {
-          print("Get Started");
+          Constants.prefs.setBool("isBoarded", true);
+          Navigator.pushReplacementNamed(context, "/home");
         },
       ),
     );
