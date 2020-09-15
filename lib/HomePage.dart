@@ -1,3 +1,4 @@
+import 'package:encryptor/Pages/Onboarding.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -5,11 +6,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Encryptor"),
+        title: Text("Encryptor")
       ),
-      body: Center(
-        child: Text("This is a great App Made from Flutter"),
-      ),
+      body:OnBoarding()
     );
   }
 }
