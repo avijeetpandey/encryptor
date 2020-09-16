@@ -20,7 +20,6 @@ class PasswordGenerator {
   static String md5_encrypt(String str) {
     String md5_hashCode;
     var key = utf8.encode(str);
-    var bytes = utf8.encode(_salt);
     md5_hashCode = md5.convert(key).toString();
     return md5_hashCode;
   }
