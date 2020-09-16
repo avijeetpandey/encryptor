@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './Encryptor.dart';
 
 Future main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
   Constants.prefs = await SharedPreferences.getInstance();
 
   runApp(Encryptor());
