@@ -4,6 +4,8 @@ import '../utils/PasswordGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+enum Algorithms { sh256, md5 }
+
 class CreatePassword extends StatefulWidget {
   @override
   _CreatePasswordState createState() => _CreatePasswordState();
@@ -14,6 +16,7 @@ class _CreatePasswordState extends State<CreatePassword> {
   TextEditingController _textController = TextEditingController();
   String _encryptedPassword = 'This is the encrypted Text';
   String _tempString;
+  Algorithms _algorithm = Algorithms.sh256;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,26 @@ class _CreatePasswordState extends State<CreatePassword> {
           /**
            * Radio Buttons for selecting the Algorithm weather md5 or SHA256
            */
+          RadioListTile<Algorithms>(
+            title: Text('SHA - 256'),
+            value: Algorithms.sh256,
+            groupValue: _algorithm,
+            onChanged: (Algorithms value) {
+              setState(() {
+                _algorithm = value;
+              });
+            },
+          ),
+          RadioListTile<Algorithms>(
+            title: Text('MD - 5 '),
+            value: Algorithms.md5,
+            groupValue: _algorithm,
+            onChanged: (Algorithms value) {
+              setState(() {
+                _algorithm = value;
+              });
+            },
+          ),
 
           /**
            * Encrypted Password Text Field
@@ -98,16 +121,15 @@ class _CreatePasswordState extends State<CreatePassword> {
               setState(() {
                 _tempString = _textController.text;
                 _textController.clear();
-                _encryptedPassword =
-                    PasswordGenerator.sha256_encrypt(_tempString);
+                _encryptedPassword = _algorithm == Algorithms.md5
+                    ? PasswordGenerator.md5_encrypt(_tempString)
+                    : PasswordGenerator.sha256_encrypt(_tempString);
               });
             },
             child: Padding(
               padding: const EdgeInsets.all(14.0),
-              child: Text(
-                "Encrypt Text",
-                style: GoogleFonts.acme(color: Colors.white, fontSize: 18)
-              ),
+              child: Text("Encrypt Text",
+                  style: GoogleFonts.acme(color: Colors.white, fontSize: 18)),
             ),
           ),
         ],
