@@ -9,6 +9,7 @@ class CreatePassword extends StatefulWidget {
 class _CreatePasswordState extends State<CreatePassword> {
   // Text Editing Controller for the Encryption Field
   TextEditingController _textController = TextEditingController();
+  String _encryptedPassword = 'This is the encrypted Text';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,8 @@ class _CreatePasswordState extends State<CreatePassword> {
                   },
                 ),
                 hintText: "Enter here for encryption",
-                border: OutlineInputBorder(),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
                 labelText: 'Encrypt password',
               ),
               maxLength: 30,
@@ -49,16 +51,36 @@ class _CreatePasswordState extends State<CreatePassword> {
            */
 
           /**
+           * Encrypted Password Text Field
+           */
+
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              _encryptedPassword,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.acme(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+
+          /**
            * Raised Button for Generating Simple Alphanumeric Password
            */
           RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             color: Colors.orange[800],
-            onPressed: () {},
+            onPressed: () {
+              print('Controller Text : '+_textController.text);
+            },
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: Text(
                 "Generate Password",
-                style: GoogleFonts.acme(color: Colors.white, fontSize: 18),
+                style: GoogleFonts.acme(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
