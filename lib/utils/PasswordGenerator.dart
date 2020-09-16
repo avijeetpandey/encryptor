@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'package:random_string/random_string.dart';
 import 'package:crypto/crypto.dart';
 
+/** 
+ * 
+ * Class to manage Password Generation based on various Algorithms
+ * 
+*/
 class PasswordGenerator {
   static String _salt = "Axndfaslkhsdfjbsd;fjfdlkfsbfkjfga;fbafijbsfjf";
   static String generate(int length) {

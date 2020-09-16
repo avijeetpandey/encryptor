@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../utils/PasswordGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,15 +58,32 @@ class _CreatePasswordState extends State<CreatePassword> {
            * Encrypted Password Text Field
            */
 
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              _encryptedPassword,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.acme(
-                fontSize: 20,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  _encryptedPassword,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.acme(
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
+
+              /**
+               * Action Button to make text copiable to the clip board
+               */
+
+              IconButton(
+                icon: Icon(Icons.content_copy),
+                iconSize: 25.0,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: _encryptedPassword));
+                },
+              )
+            ],
           ),
           SizedBox(height: 10),
 
@@ -79,7 +98,8 @@ class _CreatePasswordState extends State<CreatePassword> {
               setState(() {
                 _tempString = _textController.text;
                 _textController.clear();
-                _encryptedPassword = PasswordGenerator.sha256_encrypt(_tempString);
+                _encryptedPassword =
+                    PasswordGenerator.sha256_encrypt(_tempString);
               });
             },
             child: Padding(
