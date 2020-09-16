@@ -1,3 +1,4 @@
+import '../utils/PasswordGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,6 +11,7 @@ class _CreatePasswordState extends State<CreatePassword> {
   // Text Editing Controller for the Encryption Field
   TextEditingController _textController = TextEditingController();
   String _encryptedPassword = 'This is the encrypted Text';
+  String _tempString;
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +76,16 @@ class _CreatePasswordState extends State<CreatePassword> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             color: Colors.orange[800],
             onPressed: () {
-              print('Controller Text : '+_textController.text);
+              setState(() {
+                _tempString = _textController.text;
+                _textController.clear();
+                _encryptedPassword = PasswordGenerator.sha256_encrypt(_tempString);
+              });
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Generate Password",
+                "Encrypt Text",
                 style: GoogleFonts.acme(color: Colors.white, fontSize: 20),
               ),
             ),
