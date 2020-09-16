@@ -59,15 +59,15 @@ class _CreatePasswordState extends State<CreatePassword> {
            */
 
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(
+                child: SelectableText(
                   _encryptedPassword,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.acme(
-                    fontSize: 20,
+                    fontSize: 18.5,
                   ),
                 ),
               ),
@@ -103,10 +103,10 @@ class _CreatePasswordState extends State<CreatePassword> {
               });
             },
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(14.0),
               child: Text(
                 "Encrypt Text",
-                style: GoogleFonts.acme(color: Colors.white, fontSize: 20),
+                style: GoogleFonts.acme(color: Colors.white, fontSize: 18)
               ),
             ),
           ),
