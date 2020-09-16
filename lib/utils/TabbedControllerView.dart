@@ -6,29 +6,34 @@ class TabbedControllerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Encryptor",
-            style: GoogleFonts.acme(fontSize: 28),
-          ),
-          bottom: TabBar(
-            tabs: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Icon(Icons.vpn_key),
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Encryptor",
+                style: GoogleFonts.acme(fontSize: 28),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Icon(Icons.assignment_turned_in),
-              )
-            ],
-          ),
-          centerTitle: true,
-        ),
-        body: TabbedView()
-        )
-    );
+              bottom: TabBar(
+                tabs: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(Icons.vpn_key),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(Icons.assignment_turned_in),
+                  )
+                ],
+              ),
+              centerTitle: true,
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.orange[800],
+              child: Icon(Icons.add),
+              onPressed: () {
+                print('Floating Button Pressed');
+              },
+            ),
+            body: TabbedView()));
   }
 }
