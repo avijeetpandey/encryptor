@@ -5,10 +5,11 @@ import './Encryptor.dart';
 import 'package:flutter/services.dart';
 
 Future main() async {
+    WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
 
-  WidgetsFlutterBinding.ensureInitialized();
+
   Constants.prefs = await SharedPreferences.getInstance();
 
   runApp(Encryptor());
