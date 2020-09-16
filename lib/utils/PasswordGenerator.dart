@@ -9,11 +9,20 @@ class PasswordGenerator {
     return generated;
   }
 
+/**
+ * This function returns md5 algorithm based hashcode for encryption
+ */
   static String md5_encrypt(String str) {
     String md5_hashCode;
-
+    var key = utf8.encode(str);
+    var bytes = utf8.encode(_salt);
+    md5_hashCode = md5.convert(key).toString();
     return md5_hashCode;
   }
+
+  /**
+   * This function returns sha256 algorithm based hashcode for encryption
+   */
 
   static String sha256_encrypt(String str) {
     String sha256_hashCode;
