@@ -34,122 +34,124 @@ class _CreatePasswordState extends State<CreatePassword> {
   Widget build(BuildContext context) {
     return Container(
         child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          /***
-           * Row for generating Random Passwords Strings
-           */
+      child: SingleChildScrollView(
+              child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            /***
+             * Row for generating Random Passwords Strings
+             */
 
-          /**
+            /**
      * Encryption Related UI stuff
      * Contains md5 and sha256 algorithms for encryption
      */
 
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.message),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _textController.clear();
-                  },
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.message),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      _textController.clear();
+                    },
+                  ),
+                  hintText: "Enter here for encryption",
+                  border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
+                  labelText: 'Encrypt password',
                 ),
-                hintText: "Enter here for encryption",
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
-                labelText: 'Encrypt password',
+                maxLength: 30,
+                autocorrect: false,
+                autofocus: false,
               ),
-              maxLength: 30,
-              autocorrect: false,
-              autofocus: false,
             ),
-          ),
 
-          /**
-           * Radio Buttons for selecting the Algorithm weather md5 or SHA256
-           */
-          RadioListTile<Algorithms>(
-            title: Text('SHA - 256'),
-            value: Algorithms.sh256,
-            groupValue: _algorithm,
-            onChanged: (Algorithms value) {
-              setState(() {
-                _algorithm = value;
-              });
-            },
-          ),
-          RadioListTile<Algorithms>(
-            title: Text('MD - 5 '),
-            value: Algorithms.md5,
-            groupValue: _algorithm,
-            onChanged: (Algorithms value) {
-              setState(() {
-                _algorithm = value;
-              });
-            },
-          ),
+            /**
+             * Radio Buttons for selecting the Algorithm weather md5 or SHA256
+             */
+            RadioListTile<Algorithms>(
+              title: Text('SHA - 256'),
+              value: Algorithms.sh256,
+              groupValue: _algorithm,
+              onChanged: (Algorithms value) {
+                setState(() {
+                  _algorithm = value;
+                });
+              },
+            ),
+            RadioListTile<Algorithms>(
+              title: Text('MD - 5 '),
+              value: Algorithms.md5,
+              groupValue: _algorithm,
+              onChanged: (Algorithms value) {
+                setState(() {
+                  _algorithm = value;
+                });
+              },
+            ),
 
-          /**
-           * Encrypted Password Text Field
-           */
+            /**
+             * Encrypted Password Text Field
+             */
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SelectableText(
-                  _encryptedPassword,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.acme(
-                    fontSize: 18.5,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SelectableText(
+                    _encryptedPassword,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.acme(
+                      fontSize: 18.5,
+                    ),
                   ),
                 ),
-              ),
 
-              /**
-               * Action Button to make text copiable to the clip board
-               */
+                /**
+                 * Action Button to make text copiable to the clip board
+                 */
 
-              IconButton(
-                icon: Icon(Icons.content_copy),
-                iconSize: 25.0,
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: _encryptedPassword));
-                  _showToast(context);
-                },
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-
-          /**
-           * Raised Button for Generating Simple Alphanumeric Password
-           */
-          RaisedButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            color: Colors.orange[800],
-            onPressed: () {
-              setState(() {
-                _tempString = _textController.text;
-                _textController.clear();
-                _encryptedPassword = _algorithm == Algorithms.md5
-                    ? PasswordGenerator.md5_encrypt(_tempString)
-                    : PasswordGenerator.sha256_encrypt(_tempString);
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Text("Encrypt Text",
-                  style: GoogleFonts.acme(color: Colors.white, fontSize: 18)),
+                IconButton(
+                  icon: Icon(Icons.content_copy),
+                  iconSize: 25.0,
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: _encryptedPassword));
+                    _showToast(context);
+                  },
+                )
+              ],
             ),
-          ),
-        ],
+            SizedBox(height: 10),
+
+            /**
+             * Raised Button for Generating Simple Alphanumeric Password
+             */
+            RaisedButton(
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              color: Colors.orange[800],
+              onPressed: () {
+                setState(() {
+                  _tempString = _textController.text;
+                  _textController.clear();
+                  _encryptedPassword = _algorithm == Algorithms.md5
+                      ? PasswordGenerator.md5_encrypt(_tempString)
+                      : PasswordGenerator.sha256_encrypt(_tempString);
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text("Encrypt Text",
+                    style: GoogleFonts.acme(color: Colors.white, fontSize: 18)),
+              ),
+            ),
+          ],
+        ),
       ),
     ));
   }

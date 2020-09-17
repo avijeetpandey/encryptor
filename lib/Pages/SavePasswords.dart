@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:encryptor/db/DBhelper.dart';
-import 'package:sqflite/sqflite.dart';
 
 class SavePasswords extends StatefulWidget {
   @override
@@ -59,11 +58,13 @@ class _SavePasswordsState extends State<SavePasswords> {
 
     final id = await dbhelper.insert(row);
     print(id);
+
+    showAll();
   }
 
   void showAll() async {
     final res = await dbhelper.query_all();
-    print(res);
+    print('Inserted Query : ' + res.toString());
   }
 
   @override
@@ -79,131 +80,133 @@ class _SavePasswordsState extends State<SavePasswords> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-              key: formkey,
-              child: Column(
-                children: [
-                  /**
-                   * DropDown List for platform selection
-                   */
+        child: SingleChildScrollView(
+                  child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Form(
+                key: formkey,
+                child: Column(
+                  children: [
+                    /**
+                     * DropDown List for platform selection
+                     */
 
-                  DropdownButton(
-                    autofocus: true,
-                    value: _value,
-                    items: platforms.map((String platform) {
-                      return DropdownMenuItem(
-                        value: platform,
-                        child: Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            platform,
-                            style: GoogleFonts.acme(
-                              fontSize: 18.0,
+                    DropdownButton(
+                      autofocus: true,
+                      value: _value,
+                      items: platforms.map((String platform) {
+                        return DropdownMenuItem(
+                          value: platform,
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: Text(
+                              platform,
+                              style: GoogleFonts.acme(
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _value = value;
-                      });
-                    },
-                  ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _value = value;
+                        });
+                      },
+                    ),
 
-                  /**
-                   * Email Text Form field
+                    /**
+                     * Email Text Form field
+                     */
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextFormField(
+                        autofocus: true,
+                        controller: _emailController,
+                        autocorrect: false,
+                        autovalidate: true,
+                        validator: EmailValidator(errorText: "Not a valid Email"),
+                        decoration: InputDecoration(
+                            labelText: "Email",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            prefixIcon: Icon(Icons.email),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                _emailController.clear();
+                              },
+                            )),
+                      ),
+                    ),
+
+                    /**
+                   * Username text form field
                    */
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      controller: _emailController,
-                      autocorrect: false,
-                      autovalidate: true,
-                      validator: EmailValidator(errorText: "Not a valid Email"),
-                      decoration: InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18)),
-                          prefixIcon: Icon(Icons.email),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              _emailController.clear();
-                            },
-                          )),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextFormField(
+                        validator:
+                            RequiredValidator(errorText: 'username is required'),
+                        controller: _usernameController,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                            labelText: "Username",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            prefixIcon: Icon(Icons.account_circle),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                _usernameController.clear();
+                              },
+                            )),
+                      ),
                     ),
-                  ),
 
-                  /**
-                 * Username text form field
-                 */
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: TextFormField(
-                      validator:
-                          RequiredValidator(errorText: 'username is required'),
-                      controller: _usernameController,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: "Username",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18)),
-                          prefixIcon: Icon(Icons.account_circle),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              _usernameController.clear();
-                            },
-                          )),
-                    ),
-                  ),
-
-                  /**
-                 * Password Text Form Field
-                 */
-
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: TextFormField(
-                      validator: _passwordValidator,
-                      obscureText: true,
-                      controller: _passwordController,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: "Password",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18)),
-                          prefixIcon: Icon(Icons.vpn_key),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              _passwordController.clear();
-                            },
-                          )),
-                    ),
-                  ),
-
-                  /**
-                   * Raised Button for saving the passwords
+                    /**
+                   * Password Text Form Field
                    */
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    color: Colors.orange[800],
-                    onPressed: insert,
-                    child: Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Text("Save",
-                          style: GoogleFonts.acme(
-                              color: Colors.white, fontSize: 18)),
+
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextFormField(
+                        validator: _passwordValidator,
+                        obscureText: true,
+                        controller: _passwordController,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                            labelText: "Password",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            prefixIcon: Icon(Icons.vpn_key),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                _passwordController.clear();
+                              },
+                            )),
+                      ),
                     ),
-                  ),
-                ],
-              )),
+
+                    /**
+                     * Raised Button for saving the passwords
+                     */
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      color: Colors.orange[800],
+                      onPressed: insert,
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Text("Save",
+                            style: GoogleFonts.acme(
+                                color: Colors.white, fontSize: 18)),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
         ),
       ),
     );
