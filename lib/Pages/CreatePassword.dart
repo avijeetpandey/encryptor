@@ -14,7 +14,7 @@ class CreatePassword extends StatefulWidget {
 class _CreatePasswordState extends State<CreatePassword> {
   // Text Editing Controller for the Encryption Field
   TextEditingController _textController = TextEditingController();
-  String _encryptedPassword = 'This is the encrypted Text';
+  String _encryptedPassword = 'Encrypted Text will appear here';
   String _tempString;
   Algorithms _algorithm = Algorithms.sh256;
 
@@ -25,6 +25,11 @@ class _CreatePasswordState extends State<CreatePassword> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+
+          /***
+           * Row for generating Random Passwords Strings
+           */
+
           /**
      * Encryption Related UI stuff
      * Contains md5 and sha256 algorithms for encryption

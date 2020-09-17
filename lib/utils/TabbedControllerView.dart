@@ -8,6 +8,7 @@ class TabbedControllerView extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               title: Text(
                 "Encryptor",
@@ -31,7 +32,7 @@ class TabbedControllerView extends StatelessWidget {
               backgroundColor: Colors.orange[800],
               child: Icon(Icons.add),
               onPressed: () {
-                print('Floating Button Pressed');
+                Navigator.pushNamed(context, "/save");
               },
             ),
             body: TabbedView()));

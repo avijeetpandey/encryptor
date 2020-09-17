@@ -33,7 +33,7 @@ class Databasehelper {
    * This line of code will prevent creating multiple instance of the class
    */
   Databasehelper._privateConstructor();
-  static final Databasehelper instance  = Databasehelper._privateConstructor();
+  static final Databasehelper instance = Databasehelper._privateConstructor();
 
   /// getter function to get the database
   Future<Database> get database async {
@@ -56,16 +56,14 @@ class Databasehelper {
   /**
    * Function to create table / database 
    */
-  Future _createDB(Database db , int version) async{
-    await db.execute(
-      '''
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
       CREATE TABLE $_table (
         $idColumn INTEGER PRIMARY KEY,
         $usernameColumn TEXT NOT NULL,
         $platformColumn TEXT NOT NULL,
         $passwordColumn TEXT NOT NULL
       )
-      '''
-    )
+      ''');
   }
 }
