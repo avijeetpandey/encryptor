@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:encryptor/db/DBhelper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class SavePasswords extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class _SavePasswordsState extends State<SavePasswords> {
    */
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final dbhelper = Databasehelper.instance;
 
   /**
    * Text Editing Controllers
@@ -38,6 +41,30 @@ class _SavePasswordsState extends State<SavePasswords> {
     'Twitter',
     'Others'
   ];
+
+  // Password Validator
+  final _passwordValidator = MultiValidator([
+    RequiredValidator(errorText: 'password is required'),
+    MinLengthValidator(8, errorText: 'passwords must be atleast 8')
+  ]);
+
+  void insert() async {
+    Navigator.pop(context);
+    Map<String, dynamic> row = {
+      Databasehelper.platformColumn: _value,
+      Databasehelper.usernameColumn: _usernameController.text,
+      Databasehelper.emailColumn: _emailController.text,
+      Databasehelper.passwordColumn: _passwordController.text,
+    };
+
+    final id = await dbhelper.insert(row);
+    print(id);
+  }
+
+  void showAll() async {
+    final res = await dbhelper.query_all();
+    print(res);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +144,8 @@ class _SavePasswordsState extends State<SavePasswords> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
+                      validator:
+                          RequiredValidator(errorText: 'username is required'),
                       controller: _usernameController,
                       autocorrect: false,
                       decoration: InputDecoration(
@@ -140,6 +169,7 @@ class _SavePasswordsState extends State<SavePasswords> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
+                      validator: _passwordValidator,
                       obscureText: true,
                       controller: _passwordController,
                       autocorrect: false,
@@ -164,7 +194,7 @@ class _SavePasswordsState extends State<SavePasswords> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
                     color: Colors.orange[800],
-                    onPressed: () {},
+                    onPressed: insert,
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: Text("Save",
