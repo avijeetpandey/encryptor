@@ -18,6 +18,18 @@ class _CreatePasswordState extends State<CreatePassword> {
   String _tempString;
   Algorithms _algorithm = Algorithms.sh256;
 
+  /**
+   * Function to show toast once data is copied
+   */
+
+  void _showToast(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(SnackBar(
+      content: Text("Copied"),
+      duration: Duration(microseconds: 150),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +37,6 @@ class _CreatePasswordState extends State<CreatePassword> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           /***
            * Row for generating Random Passwords Strings
            */
@@ -109,6 +120,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                 iconSize: 25.0,
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: _encryptedPassword));
+                  _showToast(context);
                 },
               )
             ],
