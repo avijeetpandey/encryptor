@@ -22,6 +22,7 @@ class Databasehelper {
   static final usernameColumn = 'username';
   static final platformColumn = 'platform';
   static final passwordColumn = 'password';
+  static final emailColumn = 'email';
 
   /**
    * Database variable ( coming from the sqflite class )
@@ -60,10 +61,28 @@ class Databasehelper {
     await db.execute('''
       CREATE TABLE $_table (
         $idColumn INTEGER PRIMARY KEY,
-        $usernameColumn TEXT NOT NULL,
         $platformColumn TEXT NOT NULL,
+        $usernameColumn TEXT NOT NULL,
+        $emailColumn EMAIL NOT NULL,
         $passwordColumn TEXT NOT NULL
       )
       ''');
+  }
+
+  /**
+   * Function to Insert into the database
+   */
+
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(_table, row);
+  }
+
+  /**
+   * Function to show all the data inserted into the database
+   */
+  Future<List<Map<String, dynamic>>> query_all() async {
+    Database db = await instance.database;
+    return await db.query(_table);
   }
 }
