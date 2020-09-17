@@ -22,6 +22,23 @@ class _SavePasswordsState extends State<SavePasswords> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  /** DropDown list value */
+  String _value = 'Facebook';
+
+  /**
+   * Popular Platforms List
+   */
+
+  List<String> platforms = <String>[
+    'Facebook',
+    'LinkedIn',
+    'Instagram',
+    'SnapChat',
+    'Quora',
+    'Twitter',
+    'Others'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +59,44 @@ class _SavePasswordsState extends State<SavePasswords> {
               child: Column(
                 children: [
                   /**
+                   * DropDown List for platform selection
+                   */
+
+                  DropdownButton(
+                    autofocus: true,
+                    value: _value,
+                    items: platforms.map((String platform) {
+                      return DropdownMenuItem(
+                        value: platform,
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            platform,
+                            style: GoogleFonts.acme(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _value = value;
+                      });
+                    },
+                  ),
+
+                  /**
                    * Email Text Form field
                    */
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
+                      autofocus: true,
                       controller: _emailController,
                       autocorrect: false,
+                      autovalidate: true,
+                      validator: EmailValidator(errorText: "Not a valid Email"),
                       decoration: InputDecoration(
                           labelText: "Email",
                           border: OutlineInputBorder(
@@ -56,15 +104,17 @@ class _SavePasswordsState extends State<SavePasswords> {
                           prefixIcon: Icon(Icons.email),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.clear),
-                            onPressed: () {},
+                            onPressed: () {
+                              _emailController.clear();
+                            },
                           )),
                     ),
                   ),
 
-                /**
+                  /**
                  * Username text form field
                  */
-                Padding(
+                  Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
                       controller: _usernameController,
@@ -76,18 +126,21 @@ class _SavePasswordsState extends State<SavePasswords> {
                           prefixIcon: Icon(Icons.account_circle),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.clear),
-                            onPressed: () {},
+                            onPressed: () {
+                              _usernameController.clear();
+                            },
                           )),
                     ),
                   ),
 
-                /**
+                  /**
                  * Password Text Form Field
                  */
-                
-                Padding(
+
+                  Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextFormField(
+                      obscureText: true,
                       controller: _passwordController,
                       autocorrect: false,
                       decoration: InputDecoration(
@@ -97,11 +150,28 @@ class _SavePasswordsState extends State<SavePasswords> {
                           prefixIcon: Icon(Icons.vpn_key),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.clear),
-                            onPressed: () {},
+                            onPressed: () {
+                              _passwordController.clear();
+                            },
                           )),
                     ),
-                  )
+                  ),
 
+                  /**
+                   * Raised Button for saving the passwords
+                   */
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    color: Colors.orange[800],
+                    onPressed: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Text("Save",
+                          style: GoogleFonts.acme(
+                              color: Colors.white, fontSize: 18)),
+                    ),
+                  ),
                 ],
               )),
         ),
