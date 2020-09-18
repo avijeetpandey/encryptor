@@ -60,3 +60,10 @@ flutter:
     - assets/images/two.png
     - assets/images/three.png
     - assets/images/four.png
+    - assets/icons/facebook.png
+    - assets/icons/twitter.png
+    - assets/icons/quora.png
+    - assets/icons/snapchat.png
+    - assets/icons/other.png
+    - assets/icons/instagram.png
+    - assets/icons/linkedin.png

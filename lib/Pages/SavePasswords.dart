@@ -57,14 +57,10 @@ class _SavePasswordsState extends State<SavePasswords> {
     };
 
     final id = await dbhelper.insert(row);
-    print(id);
-
-    showAll();
   }
 
   void showAll() async {
     final res = await dbhelper.query_all();
-    print('Inserted Query : ' + res.toString());
   }
 
   @override
@@ -148,7 +144,7 @@ class _SavePasswordsState extends State<SavePasswords> {
                       child: TextFormField(
                         validator:
                             RequiredValidator(errorText: 'username is required'),
-                        controller: _usernameController,
+                        controller: _usernameController, 
                         autocorrect: false,
                         decoration: InputDecoration(
                             labelText: "Username",
