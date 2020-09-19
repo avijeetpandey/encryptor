@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:encryptor/db/DBhelper.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/NoPasswordView.dart';
 
 class ListPasswordView extends StatefulWidget {
@@ -15,7 +17,15 @@ class _ListPasswordViewState extends State<ListPasswordView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getAllData();
+     getAllData();
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(SnackBar(
+      content: Text("Copied"),
+      duration: Duration(microseconds: 150),
+    ));
   }
 
   Future<void> getAllData() async {
@@ -33,7 +43,8 @@ class _ListPasswordViewState extends State<ListPasswordView> {
             : ListView.builder(
                 itemCount: _records.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(child: ListTile(
+                  return Card(
+                      child: ListTile(
                     leading: CircleAvatar(child: Image.asset((() {
                       if (_records[index]['platform'] == 'Facebook')
                         return 'assets/icons/facebook.png';
@@ -50,8 +61,25 @@ class _ListPasswordViewState extends State<ListPasswordView> {
                       else
                         return 'assets/icons/other.png';
                     })())),
+                    title: Text(
+                      _records[index]["username"],
+                      style: GoogleFonts.acme(fontSize: 18),
+                    ),
+                    subtitle: Text(
+                      _records[index]["password"],
+                      style: GoogleFonts.acme(fontSize: 12),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.content_copy),
+
+                      onPressed: () {
+                        _showToast(context);
+                        Clipboard.setData(
+                            ClipboardData(text: _records[index]["password"]));
+                      },
+                    ),
                   ));
                 },
-              ) );
+              ));
   }
 }
