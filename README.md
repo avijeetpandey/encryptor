@@ -27,7 +27,9 @@ This will setup , build and launch the app in emulator or in physical device
 
 **App Screens**<br>
 <img src="screenshots/four.jpg" alt="app screen" height="400" /> 
-<img src="screenshots/five.jpg" alt="app screen" height="400" /> 
+<img src="screenshots/five.jpg" alt="app screen" height="400" />
+<img src="screenshots/six.jpg" alt="app screen" height="400" />
+<img src="screenshots/seven.jpg" alt="app screen" height="400" />
 
 
 ### Made with ❤ by Avijeet , Using Flutter :tada:
